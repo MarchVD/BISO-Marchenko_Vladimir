@@ -1,4 +1,4 @@
-@startuml
+@startuml schema
 ' Стиль для Go
 skinparam classAttributeIconSize 0
 hide empty members
@@ -28,19 +28,19 @@ package main {
     +Send(message string) error
   }
 
-  ' Структура UserIvanovIvan, которая зависит от Notifier
-  class UserIvanovIvan {
+  ' Структура UserMarchenkoVladimir, которая зависит от Notifier
+  class UserMarchenkoVladimir {
     -name: string
     -email: string
     -notifier: Notifier
-    +NewUser(name string, email string, notifier Notifier) *UserIvanovIvan
+    +NewUser(name string, email string, notifier Notifier) *UserMarchenkoVladimir
     +Notify(message string) error
   }
 
   ' Связи
   Notifier <|.. EmailNotifier : реализует
   Notifier <|.. SmsNotifier : реализует
-  UserIvanovIvan *--> Notifier : использует >
+  UserMarchenkoVladimir *--> Notifier : использует >
 
 }
 @enduml
