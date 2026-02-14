@@ -33,16 +33,16 @@ func (s SmsNotifier) Send(message string) error {
 	return nil
 }
 
-// User представляет пользователя, который может получать уведомления.
-type User struct {
+// UserMarchenkoVladimir представляет пользователя, который может получать уведомления.
+type UserMarchenkoVladimir struct {
 	name     string
 	email    string
 	notifier Notifier // Зависимость от интерфейса (инъекция зависимости)
 }
 
 // NewUser создает нового пользователя с заданным способом уведомления.
-func NewUser(name string, email string, notifier Notifier) *User {
-	return &User{
+func NewUser(name string, email string, notifier Notifier) *UserMarchenkoVladimir {
+	return &UserMarchenkoVladimir{
 		name:     name,
 		email:    email,
 		notifier: notifier,
@@ -50,8 +50,8 @@ func NewUser(name string, email string, notifier Notifier) *User {
 }
 
 // Notify отправляет пользователю уведомление через его notifier.
-func (u User) Notify(message string) error {
-	fmt.Printf("User %s (%s) received a notification: ", u.name, u.email)
+func (u UserMarchenkoVladimir) Notify(message string) error {
+	fmt.Printf("UserMarchenkoVladimir %s (%s) received a notification: ", u.name, u.email)
 	return u.notifier.Send(message)
 }
 
