@@ -1,0 +1,30 @@
+@startuml use_case
+left to right direction
+skinparam actorStyle awesome
+
+actor "Продавец" as Seller
+actor "Покупатель" as Buyer
+actor "Администратор" as Admin
+rectangle "Система" {
+    usecase "Вход в систему" as S1
+    usecase "Регистрация" as S2
+    usecase "Публикация товара" as P1
+    usecase "Отправка товара" as P2
+    usecase "Составление заказа" as O1
+    usecase "Оплата заказа" as O2
+    usecase "Сбор заказа" as O3
+    usecase "Отправка заказа" as O4
+}
+
+Seller --> S1
+Buyer --> S1
+Admin --> S1
+S1 ..> S2 : <<extend>>
+Seller --> P1
+Seller --> P2
+Buyer --> O1
+Buyer --> O2
+Admin --> O3
+Admin --> O4
+
+@enduml
