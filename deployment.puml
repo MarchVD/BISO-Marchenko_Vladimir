@@ -1,0 +1,37 @@
+@startuml deployment_diagram
+
+node "Клиентское устройство" <<Device>> {
+    artifact "Браузер" as Browser
+    artifact "Мобильное приложение" as MobileApp
+}
+
+node "Веб-сервер" <<Server>> {
+    artifact "Nginx" as Nginx
+    artifact "Статические файлы" as StaticFiles
+    Nginx --> StaticFiles : обслуживает
+}
+
+node "Сервер приложений" <<Server>> {
+    artifact "API сервер (Go)" as APIServer
+    artifact "Сервис бизнес-логики (Go)" as BusinessService
+    artifact "Конфигурация" as Config
+    APIServer --> Config : читает
+    BusinessService --> Config : читает
+}
+
+node "Сервер базы данных" <<Server>> {
+    artifact "PostgreSQL" as PostgreSQL
+    database "Данные магазина" as DBData
+    PostgreSQL --> DBData : управляет
+}
+
+' Пути с протоколами
+Browser --> Nginx : HTTPS
+MobileApp --> Nginx : HTTPS
+
+Nginx --> APIServer : HTTP/Reverse Proxy
+
+APIServer --> BusinessService : gRPC
+BusinessService --> PostgreSQL : PostgreSQL protocol
+
+@enduml
