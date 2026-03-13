@@ -53,7 +53,7 @@ class "Order" as Order <<struct>> {
 class "Delivery" as Delivery <<struct>> {
     -order: Order
     -address: address Buyer
-    +deliveryStatus(): bool
+    +DeliveryStatus(): bool
 }
 
 ' Интерфейсы
