@@ -1,0 +1,72 @@
+@startuml class_diagram
+
+' Интерфейсы
+interface "ProductInterface" as ProductInterface <<interface>> {
+    +GetName(): string
+    +GetPrice(): float
+    +CheckAvailability(): bool
+}
+
+interface "Payable" as Payable <<interface>> {
+    +Pay(amount float): bool
+}
+
+' Структуры
+class "Buyer" as Buyer <<struct>> {
+    -id: int
+    -name: string
+    -address: string
+    +CreateOrder(items OrderItem[]): Order
+}
+
+class "Seller" as Seller <<struct>> {
+    -id: int
+    -name: string
+    +PublishProduct(product Product)
+    +UpdateProduct(product Product)
+}
+
+class "Product" as Product <<struct>> {
+    -id: int
+    -name: string
+    -description: string
+    -price: float
+    -quantity: int
+}
+
+class "OrderItem" as OrderItem <<struct>> {
+    -item: Product
+    -quantity: int
+    -price: float
+}
+
+class "Order" as Order <<struct>> {
+    -id: int
+    -date: date
+    -status: bool
+    -totalAmount: float
+    +GetTotal(): float
+    +AddItem(item OrderItem)
+    +Cancel(): bool
+}
+
+class "Delivery" as Delivery <<struct>> {
+    -order: Order
+    -address: address Buyer
+    +deliveryStatus(): bool
+}
+
+' Интерфейсы
+Product ..|> ProductInterface
+Order ..|> Payable
+
+' Отношения
+Order *-- OrderItem : contains
+Product o-- OrderItem : in
+
+' Ассоциации с кратностью
+Seller "1" -- "many" Product : publishes
+Buyer "1" -- "many" Order : makes
+Order "1" -- "0..1" Delivery : delivered
+
+@enduml
