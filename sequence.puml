@@ -1,4 +1,4 @@
-@startuml sequence
+@startuml sequence_diagram
 
 actor "Покупатель" as Buyer
 participant "Сайт" as Site
