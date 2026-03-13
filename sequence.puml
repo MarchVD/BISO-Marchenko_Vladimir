@@ -1,0 +1,38 @@
+@startuml sequence
+
+actor "Покупатель" as Buyer
+participant "Сайт" as Site
+participant "Сервер" as Server
+database "База данных" as DB
+
+Buyer -> Site: оформить заказ
+activate Site
+Site -> Server: создать заказ
+activate Server
+
+loop для каждого товара в корзине
+    Server -> DB: проверить наличие товара
+    activate DB
+    DB --> Server: количество товара
+    deactivate DB
+end
+
+alt все товары в наличии
+    Server -> DB: сохранить заказ
+    activate DB
+    DB --> Server: заказ сохранен
+    deactivate DB
+    
+    Server --> Site: заказ успешно создан
+    deactivate Server
+    Site --> Buyer: заказ оформлен
+
+else товаров нет в наличии
+    Server --> Site: ошибка: товары недоступны
+    deactivate Server
+    Site --> Buyer: товары отсутствуют
+end
+
+deactivate Site
+
+@enduml
