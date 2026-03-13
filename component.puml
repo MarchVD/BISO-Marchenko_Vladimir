@@ -1,0 +1,21 @@
+@startuml component
+
+package "Frontend" {
+    [Веб-интерфейс] as WebUI
+}
+
+package "Backend" {
+    [API сервер] as APIServer
+    [Сервис бизнес-логики] as BusinessService
+}
+
+database "База данных" {
+    [PostgreSQL] as Database
+}
+
+' Интерфейсы взаимодействия
+WebUI --> APIServer : HTTP/REST
+APIServer --> BusinessService : gRPC/internal
+BusinessService --> Database : SQL
+
+@enduml
